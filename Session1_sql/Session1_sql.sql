@@ -2,11 +2,11 @@ create database diagram;
 use diagram;
 create table banners(
 id varchar(36) primary key,
-title varchar(255) not null,
+title nvarchar(255) not null,
 image varchar(200) not null,
-summary varchar(200),
+summary nvarchar(200),
 link varchar(200),
-order_by varchar(255),
+order_by nvarchar(255),
 status bit default 1
 );
 drop table banners;
@@ -16,35 +16,35 @@ select * from banners;
 create table contacts(
 id varchar(36) primary key,
 email varchar(255) not null,
-address varchar(200) not null,
-message varchar(200),
+address nvarchar(200) not null,
+message nvarchar(200),
 status bit default 1
 );
 drop table contacts;
-insert into contacts() values();
+insert into contacts(id, email, address, message, status) values(uuid(), 'email 1', 'address 1', 'message 1', 0);
 select * from contacts;
 --
 create table blogs(
 id varchar(36) primary key,
-title varchar(255) not null,
+title nvarchar(255) not null,
 image varchar(200) not null,
-content varchar(200),
+content nvarchar(200),
 status bit default 1
 );
 drop table blogs;
 
 create table abouts(
 id varchar(36) primary key,
-title varchar(255) not null,
+title nvarchar(255) not null,
 image varchar(200) not null,
-content varchar(200),
+content nvarchar(255),
 status bit default 1
 );
 drop table abouts;
 
 create table categorys(
 id varchar(36) primary key,
-name varchar(255) not null,
+name nvarchar(60) not null,
 keyword varchar(50) not null,
 description nvarchar(1000),
 description nvarchar(1000),
@@ -54,9 +54,9 @@ drop table categorys;
 
 create table customers(
 id varchar(36) primary key,
-name varchar(255) not null,
-address varchar(200) not null,
-phone varchar(10) not null,
+name nvarchar(60) not null,
+addressn varchar(200) not null,
+phone int(10) not null,
 email varchar(200) not null
 );
 drop table customers;
@@ -74,14 +74,14 @@ create table order_details(
 id varchar(36), foreign key (id) references orders(id),
 product_id varchar(36), foreign key (product_id) references products(id),
 order_id varchar(36),
-price float,
-quantity int
+price float, check(price > 0),
+quantity int, check(quantity > 0)
 );
 drop table order_details;
 
 create table products(
 id varchar(36) primary key,
-name varchar(255) not null,
+name nvarchar(60) not null,
 category_id varchar(36), foreign key (category_id) references categorys(id),
 image varchar(200) not null,
 list_image varchar(10) not null,
@@ -97,11 +97,11 @@ drop table products;
 --
 create table services(
 id varchar(36) primary key,
-name varchar(255) not null,
-summary varchar(500) not null,
+name nvarchar(255) not null,
+summary nvarchar(500) not null,
 content nvarchar(1000),
 image varchar(200),
-order_by varchar(255),
+order_by nvarchar(255),
 status bit default 1
 );
 drop table services;
@@ -115,7 +115,7 @@ create table books(
 id varchar(36) primary key,
 user_id varchar(36), foreign key (user_id) references users(id),
 service_id varchar(36), foreign key (service_id) references services(id),
-name varchar(255) not null,
+name nvarchar(60) not null,
 phone int(10) not null,
 date date
 );
