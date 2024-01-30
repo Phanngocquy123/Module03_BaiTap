@@ -1,6 +1,6 @@
 
 
--- 7. Tìm kiếm sản phẩm dựa trên mức đánh giá trung bình
+
 
 -- 9. Tổng doanh thu từng tháng trong năm
 
@@ -38,12 +38,7 @@ select o.Status, count(o.Status)*100/(select count(*) from orders) as RateDelive
 select * from orders;
 
 -- 5. Báo cáo đánh giá sản phẩm và điểm đánh giá trung bình cho mỗi sản phẩm
-select p.*, avg(r.Rating) as AverageRating
-	from Products p
-	join Reviews r on p.ProductID = r.ProductID
-	group by p.ProductID
-	order by AverageRating DESC
-;
+
 
 -- 6. Liệt kê các sản phẩm được đặt hàng nhiều nhất
 select  p.* , sum(ord.Quantity) as MaxOrder
@@ -52,6 +47,15 @@ select  p.* , sum(ord.Quantity) as MaxOrder
     group by p.ProductID
     order by MaxOrder desc 
 	limit 1
+;
+
+-- 7. Tìm kiếm sản phẩm dựa trên mức đánh giá trung bình
+select p.*, avg(r.Rating) as AverageRating
+	from Products p
+	join Reviews r on p.ProductID = r.ProductID
+	group by p.ProductID
+    having AverageRating > 3
+	order by AverageRating DESC
 ;
 
 -- 8. Tìm khách hàng có đơn hàng có giá trị cao nhất
